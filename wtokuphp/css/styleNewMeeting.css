@@ -1,0 +1,168 @@
+/*SELEKTORY html*/
+* {
+  box-sizing: border-box;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	font-family: 'Barlow', sans-serif;
+	height: 100%;
+	margin: 0 7vw;
+	background-image: url(../img/books.jpg);
+	align-items: center;
+}
+
+h1 {
+	margin-top: 8vh;
+}
+
+section {
+	padding: 1%;
+  background-color: white;
+}
+
+ol {
+	list-style-type: none;
+	padding-left: 0;
+	margin: 0;
+	background-color: #253E57;
+	height: 100vh;
+	width: 15vw;
+	text-align: center;
+	font-family: 'Barlow', sans-serif;
+	font-weight: 400;
+	font-size: 2.1vh;
+	text-transform: uppercase;
+
+	display: flex;
+	position: fixed;
+	flex-wrap: wrap;
+	align-content: center;
+}
+
+ol li{
+	flex: 1 1 200px;
+	margin: 2vh 0 2vh 0;
+	letter-spacing: 0.25vh;
+}
+
+ol li a{
+	text-decoration: none;
+	color: white;
+	display: block;
+	padding: 20px 0;
+}
+
+ol li a:hover {
+	background-color: white;
+	color: #253E57;
+	letter-spacing: 0.125vh;
+}
+
+footer {
+	height: 30vh%;
+	text-align: center;
+}
+
+*{box-sizing: border-box; }
+
+/* SELEKTORY id*/
+
+#addNewMeeting input {
+  margin: 0 4% 0 4%;
+}
+
+#addNewMeeting select {
+  margin: 0 4% 0 4%;
+}
+
+#addNewMeeting button {
+  border: none;
+  color: white;
+  background-color: #253E57;
+  padding: 10px;
+  font-size: 100%;
+  font-family: 'Barlow', sans-serif;
+  margin: 3%;
+}
+
+#addNewMeeting button:hover {
+  color: #253E57;
+  background-color: white;
+  border: 2px solid #253E57;
+  padding: 8px;
+}
+
+/* SELEKTORY class*/
+.container {
+	flex-direction: row;
+	max-width: 70vw;
+	margin: 0 10vw 0 27vw;
+	font-family: 'Barlow', sans-serif;
+}
+
+.background {
+	/* Fallback for web browsers that doesn't support RGBa */
+	background: rgb(242, 232, 213);
+	/* RGBa with 0.6 opacity */
+	background: rgba(0, 0, 0, 0.5);
+}
+
+.container h1{
+	font-size: 4.5vh;
+	font-weight: 600;
+	color: #2B678C;
+	padding: 3vh;
+	text-align: center;
+}
+
+.container h2 {
+	text-align: left;
+	font-family: 'Barlow', sans-serif;
+	font-weight: 400;
+	font-size: 3vh;
+	color: #2B678C;
+  margin: 5vh 0 5vh 0;
+}
+
+.container h3 {
+	text-align: center;
+	font-family: 'Barlow', sans-serif;
+	font-weight: 400;
+	font-size: 2.3vh;
+	color: #2B678C;
+}
+
+.container p {
+  font-size: 120%;
+	color: #2B678C;
+	padding: 2vh;
+}
+
+/* Fading animation */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+.copyright {
+	background-color: white;
+	padding: 5vh;
+	color: #BE8A6A;
+	margin-left: 15%;
+}
