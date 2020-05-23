@@ -8,6 +8,10 @@
 			echo 'Błąd w łądczneiu z bazą danych:' . mysqli_connect_error();
 		}
 
+		session_start();
+
+		$userMail = $_SESSION['$userMail'];
+
 		$date = $time = $specialist = '';
 
 		//saving data to database
@@ -18,7 +22,7 @@
 				$time = mysqli_real_escape_string($conn, $_POST['time']);
 				$specialist = mysqli_real_escape_string($conn, $_POST['specialist']);
 
-				$sql = "INSERT INTO meeting(date,time,specialist) VALUES('$date','$time','$specialist')";
+				$sql = "INSERT INTO meeting(date,time,specialist,user_mail) VALUES('$date','$time','$specialist','$userMail')";
 
 				if(mysqli_query($conn, $sql)){
 					// success
@@ -76,7 +80,7 @@
 			<?php
 			//printing out data from database to screen
 
-			$sql = 'SELECT id, date, time, specialist FROM meeting ORDER BY created_at ';
+			$sql = "SELECT id, date, time, specialist FROM meeting WHERE user_mail = '$userMail' ORDER BY created_at ";
 			$result = mysqli_query($conn, $sql);
 			if($result)
 				$meetings = mysqli_fetch_all($result, MYSQLI_ASSOC);

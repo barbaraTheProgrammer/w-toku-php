@@ -117,6 +117,11 @@ footer {
 	padding: 2vh;
 }
 
+.info {
+  font-size: 120%;
+  margin: 10%;
+}
+
 /* Fading animation */
 .fade {
   -webkit-animation-name: fade;

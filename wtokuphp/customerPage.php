@@ -1,3 +1,19 @@
+<?php
+
+		//connection to database
+		$conn = mysqli_connect('localhost','admin','admin','w_toku_php');
+
+		//check connection
+		if(!$conn){
+			echo 'Błąd w łądczneiu z bazą danych:' . mysqli_connect_error();
+		}
+
+		session_start();
+
+		$userMail = $_SESSION['$userMail'];
+
+?>
+
 <!DOCTYPE HTML>
 <html lang="pl">
 <head>
@@ -21,11 +37,45 @@
 		</ol>
 	</nav>
 
-	<section id="aboutCustomer">
+	<section id="meetings">
 		<div class="container">
-				
+		<div class="row">
+
+			<?php
+			//printing out data from database to screen
+
+			$sql = "SELECT first_name, last_name, tel FROM user WHERE e_mail = '$userMail'";
+			$result = mysqli_query($conn, $sql);
+			if($result)
+				$aboutUser = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+				foreach($aboutUser as $aboutUserSingleInfo){ ?>
+
+							<form class="infoAboutUser" action="newMeetingPage.php" method="post">
+								<div class="info">
+									<p>imię:</p>
+									<?php echo htmlspecialchars($aboutUserSingleInfo['first_name']); ?>
+								</div>
+								<div class="info">
+									<p>nazwisko:</p>
+									<?php echo htmlspecialchars($aboutUserSingleInfo['last_name']); ?>
+								</div>
+								<div class="info">
+									<p>numer telefonu:</p>
+									<?php echo htmlspecialchars($aboutUserSingleInfo['tel']); ?>
+								</div>
+								<div class="info">
+									<p>adres e-mail:</p>
+									<?php echo htmlspecialchars($userMail); ?>
+								</div>
+							</form>
+
+				<?php } ?>
+
 		</div>
-  </section>
+	</div>
+	</section>
+
 
 </body>
 

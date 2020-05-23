@@ -282,10 +282,6 @@
 					<input type="radio" id="forAdult" name="forWho" value="dla doroslego">
 					<label for="forAdult">dorosłego</label>
 				</div>
-				<!--file-->
-				<br><br><br>
-				<label>Można wgrać opinię innych specjalistów:</label>
-				<input type="file" name="file" id="fileButton">
 				<br><br>
 				<a href="#contact"><button type="submit" name="submit" onclick="sendMessage()">wysyłam</button></a>
 			</form>

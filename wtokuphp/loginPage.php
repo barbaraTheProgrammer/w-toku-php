@@ -8,25 +8,28 @@
 			echo 'Błąd w łądczneiu z bazą danych:' . mysqli_connect_error();
 		}
 
+		session_start();
 
 	$mail = $password = '';
 	$error = '';
 
 
 	if(isset($_POST['submit'])){
+
 		$userMail = mysqli_real_escape_string($conn,$_POST['mail']);
 		$userPassword = mysqli_real_escape_string($conn,$_POST['password']);
 
 		$sql = "SELECT id FROM user WHERE e_mail = '$userMail' and password = '$userPassword'";
 		$result = mysqli_query($conn,$sql);
-		$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+		$userId = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
 		$count = mysqli_num_rows($result);
 
 		// If result matched $myusername and $mypassword, table row must be 1 row
 
 		if($count == 1) {
-			 header("location: newMeetingPage.php");
+			$_SESSION['$userMail'] = $userMail;
+			header("location: newMeetingPage.php");
 		}else {
 			 $error = "e-mail lub hasło są niewłaściwe";
 		}
