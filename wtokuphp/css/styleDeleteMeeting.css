@@ -1,0 +1,59 @@
+/*SELEKTORY html*/
+* {
+  box-sizing: border-box;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	font-family: 'Barlow', sans-serif;
+	height: 100%;
+	margin: 0 7vw;
+	background-image: url(../img/books.jpg);
+	align-items: center;
+}
+
+h1 {
+	margin-top: 8vh;
+}
+
+/* SELEKTORY class*/
+.container {
+	flex-direction: row;
+	max-width: 100%;
+  margin: auto;
+	font-family: 'Barlow', sans-serif;
+  text-align: center;
+}
+
+.deleteForm {
+  color: white;
+  font-size: 150%;
+  margin: 10%;
+}
+
+.deleteForm h1 {
+  margin: 5%;
+}
+
+.deleteForm input {
+  margin-top: 5%;
+  border: none;
+  color: white;
+  background-color: #253E57;
+  padding: 8px;
+  font-size: 80%;
+  font-family: 'Barlow', sans-serif;
+  margin: 3%;
+  width: auto;
+  text-decoration: none;
+}
+
+.deleteForm input:hover {
+  color: #253E57;
+  background-color: white;
+  border: 2px solid #253E57;
+  padding: 6px;
+}

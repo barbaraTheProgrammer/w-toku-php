@@ -158,6 +158,12 @@ text-decoration: underline;
 	padding: 2vh;
 }
 
+.red-text {
+  color: #AD0800;
+  margin: 1vh;
+  font-size: 120%;
+}
+
 /* Fading animation */
 .fade {
   -webkit-animation-name: fade;

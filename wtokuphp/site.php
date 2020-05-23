@@ -1,3 +1,15 @@
+<?php
+
+		//connection to database
+		$conn = mysqli_connect('localhost','admin','admin','w_toku_php');
+
+		//check connection
+		if(!$conn){
+			echo 'Błąd w łądczneiu z bazą danych:' . mysqli_connect_error();
+		}
+
+?>
+
 <!DOCTYPE HTML>
 <html lang="pl">
 <head>
@@ -197,25 +209,73 @@
 		</div>
 	</section>
 
+
+
+	<!--form validation-->
+	<?php
+	$name = $mail = $message = '';
+	$errors = array('name' => '', 'mail' => '', 'message' => '');
+	$nameFlag = false;
+	$mailFlag = false;
+	$messageFlag = false;
+
+	if(isset($_POST['submit'])){
+		// check title
+		if(empty($_POST['name'])){
+			$errors['name'] = 'imie jest wymagane';
+		} else{
+			$name = $_POST['name'];
+			if(!preg_match('/^[a-zA-Z\s]+$/', $name)){
+				$errors['name'] = 'imię musi składać się ze znaków i spacji';
+			}
+			else{
+				$nameFlag = true;
+			}
+		}
+
+		// check email
+		if(empty($_POST['mail'])){
+			$errors['mail'] = 'e-mail jest wymagany';
+		} else{
+			$mail = $_POST['mail'];
+			if(!filter_var($mail, FILTER_VALIDATE_EMAIL)){
+				$errors['mail'] = 'e-mail musi być poprawny';
+			}
+			else{
+				$mailFlag = true;
+			}
+		}
+
+		// check title
+		if(empty($_POST['message'])){
+			$errors['message'] = 'wiadomość jest wymagana';
+		} else {
+			$message = $_POST['message'];
+			$messageFlag = true;
+		}
+	}
+	?>
+
+
 	<section id="contact">
 		<div class="container">
 			<h1>kontakt</h1>
 			<div id="messageSentText" class="fade">Wiadomość wysłano, dziekujemy!</div>
-			<form id="formular">
+			<form id="formular" action="site.php" method="post">
 				<!--name-->
-				<input id="name" type="text" placeholder="Jak mamy się do Ciebie zwracać?">
-				<div id="nameError" class="incorrect"></div>
+				<input id="name" name="name" type="text" value="<?php echo htmlspecialchars($name) ?>" placeholder="Jak mamy się do Ciebie zwracać?">
+				<div class="red-text"><?php echo $errors['name']; ?></div>
 				<!--email-->
-				<input id="mail" type="email" placeholder="Podaj swojego maila, skontaktujemy się z Tobą!">
-				<div id="mailError" class="incorrect"></div>
+				<input id="mail" name="mail" type="email" value="<?php echo htmlspecialchars($mail) ?>" placeholder="Podaj swojego maila, skontaktujemy się z Tobą!">
+				<div class="red-text"><?php echo $errors['mail']; ?></div>
 				<!--text message-->
-				<textarea id="message" placeholder="treść"></textarea>
-				<div id="messageError" class="incorrect"></div>
+				<textarea id="message" name="message" value="<?php echo htmlspecialchars($message) ?>" placeholder="treść"><?php echo $message;?></textarea>
+				<div class="red-text"><?php echo $errors['message']; ?></div>
 				<!--radio-->
 				<br>
 				<label>Szukam zajęć dla:</label>
 				<div id="radioButtonsFormular">
-					<input type="radio" id="forMe" name="forWho" value="dla mnie">
+					<input type="radio" id="forMe" name="forWho" value="dla mnie" checked="checked">
 					<label for="forMe">mnie</label>
 					<input type="radio" id="forChild" name="forWho" value="dla dziecka">
 					<label for="forChild">dziecka</label>
@@ -225,11 +285,44 @@
 				<!--file-->
 				<br><br><br>
 				<label>Można wgrać opinię innych specjalistów:</label>
-				<input type="file" id="fileButton">
+				<input type="file" name="file" id="fileButton">
 				<br><br>
-				<a href="#contact"><button onclick="sendMessage()">wysyłam</button></a>
+				<a href="#contact"><button type="submit" name="submit" onclick="sendMessage()">wysyłam</button></a>
 			</form>
 		</div>
+
+		<!--printing sent form-->
+		<?php
+		// Function defnition
+		function function_alert($message) {
+		    // Display the alert box
+		    echo "<script>alert('$message');</script>";
+		}
+
+		if($nameFlag == true && $mailFlag == true && $messageFlag == true){
+
+			$name = mysqli_real_escape_string($conn, $_POST['name']);
+			$mail = mysqli_real_escape_string($conn, $_POST['mail']);
+			$message = mysqli_real_escape_string($conn, $_POST['message']);
+			$forWho = mysqli_real_escape_string($conn, $_POST['forWho']);
+
+			// create sql
+			$sql = "INSERT INTO form_message(name,mail,message,for_who) VALUES('$name','$mail','$message','$forWho') ";
+
+			//save to database
+			if(mysqli_query($conn, $sql)){
+				//success
+				$newLine = '\n';
+				$formContent = "WYSŁANO:".$newLine.$_POST['name'].$newLine.$_POST['mail'].$newLine.$_POST['message'].$newLine.$_POST['forWho'];
+				function_alert($formContent);
+			} else {
+				//error
+				echo 'błąd zapytania:' . mysqli_error($conn);
+			}
+		}
+		?>
+
+
 	</section>
 
 </body>

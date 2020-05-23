@@ -1,3 +1,38 @@
+<?php
+
+		//connection to database
+		$conn = mysqli_connect('localhost','admin','admin','w_toku_php');
+
+		//check connection
+		if(!$conn){
+			echo 'Błąd w łądczneiu z bazą danych:' . mysqli_connect_error();
+		}
+
+
+	$mail = $password = '';
+	$error = '';
+
+
+	if(isset($_POST['submit'])){
+		$userMail = mysqli_real_escape_string($conn,$_POST['mail']);
+		$userPassword = mysqli_real_escape_string($conn,$_POST['password']);
+
+		$sql = "SELECT id FROM user WHERE e_mail = '$userMail' and password = '$userPassword'";
+		$result = mysqli_query($conn,$sql);
+		$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+		$count = mysqli_num_rows($result);
+
+		// If result matched $myusername and $mypassword, table row must be 1 row
+
+		if($count == 1) {
+			 header("location: newMeetingPage.php");
+		}else {
+			 $error = "e-mail lub hasło są niewłaściwe";
+		}
+	}
+?>
+
 <!DOCTYPE HTML>
 <html lang="pl">
 <head>
@@ -27,13 +62,16 @@
 
   <div class="container">
     <section class ="loginContainer" id="loginArea">
-      <h1> zaloguj się</h1>
-      <input type="text" placeholder="login">
-      <input type="password" placeholder="hasło">
-      <a href="newMeetingPage.php"><button>zaloguj</button></a>
-      <div id="registration" >
-        <a href="registrationPage.php">zarejestruj się</a>
-      </div>
+		<form action="loginPage.php" method="post">
+			<h1> zaloguj się</h1>
+			<input type="text" name="mail" placeholder="e-mail">
+			<input type="password" name="password" placeholder="hasło">
+			<div class="red-text"><?php echo $error; ?></div>
+			<button type="submit" name="submit" class="">zaloguj</button>
+			<div id="registration" >
+				<a href="registrationPage.php">zarejestruj się</a>
+			</div>
+		</form>
     </section>
   </div>
 

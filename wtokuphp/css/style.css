@@ -395,9 +395,10 @@ form{
   to {opacity: 1}
 }
 
-.incorrect {
-	color: white;
-	margin: 1vh;
+
+.red-text {
+  color: #AD0800;
+  margin: 1vh;
 }
 
 .copyright {

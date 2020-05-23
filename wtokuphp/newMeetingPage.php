@@ -1,3 +1,36 @@
+<?php
+
+		//connection to database
+		$conn = mysqli_connect('localhost','admin','admin','w_toku_php');
+
+		//check connection
+		if(!$conn){
+			echo 'Błąd w łądczneiu z bazą danych:' . mysqli_connect_error();
+		}
+
+		$date = $time = $specialist = '';
+
+		//saving data to database
+		if(isset($_POST['submit'])){
+
+			if(($_POST['date'] != null) || ($_POST['time'] != null)){
+				$date = mysqli_real_escape_string($conn, $_POST['date']);
+				$time = mysqli_real_escape_string($conn, $_POST['time']);
+				$specialist = mysqli_real_escape_string($conn, $_POST['specialist']);
+
+				$sql = "INSERT INTO meeting(date,time,specialist) VALUES('$date','$time','$specialist')";
+
+				if(mysqli_query($conn, $sql)){
+					// success
+				} else {
+					echo 'błąd zapytania: '. mysqli_error($conn);
+				}
+			}
+
+		}
+
+?>
+
 <!DOCTYPE HTML>
 <html lang="pl">
 <head>
@@ -24,15 +57,44 @@
   <section id="addNewMeeting">
 		<div class="container">
 			<h2>Wyślij zapytanie o kolejną wizytę</h2>
-			<p>Data:<input type="date" required></p>
-			<p>Godzina:<input type="time" min="09:00" max="18:00" required> od 9:00 do 18:00</p>
-			<p>Specjalista:<select id="specialist">
-										  <option value="worker1">logopeda Katarzyna Porada</option>
-										  <option value="worker2">neurologopeda Małorzata Potrzeba</option>
-										</select></p>
-			<button type="submit">Wyślij zapytanie</button>
+			<form action="newMeetingPage.php" method="post">
+				<p>Data:<input type="date" name="date" required></p>
+				<p>Godzina:<input type="time" name="time" min="09:00" max="18:00" required> od 9:00 do 18:00</p>
+				<p>Specjalista:<select name="specialist" id="specialist">
+											  <option value="Katarzyna Porada">logopeda Katarzyna Porada</option>
+											  <option value="Malorzata Potrzeba">neurologopeda Małorzata Potrzeba</option>
+											</select></p>
+				<button type="submit" name="submit">Wyślij zapytanie</button>
+			</form>
 		</div>
   </section>
+
+	<section id="meetings">
+		<div class="container">
+		<div class="row">
+
+			<?php
+			//printing out data from database to screen
+
+			$sql = 'SELECT id, date, time, specialist FROM meeting ORDER BY created_at ';
+			$result = mysqli_query($conn, $sql);
+			if($result)
+				$meetings = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+			foreach($meetings as $meeting){ ?>
+
+						<form class="meetingCard" action="newMeetingPage.php" method="post">
+							<div class="inline"><?php echo htmlspecialchars($meeting['date']); ?></div>
+							<div class="inline"><?php echo htmlspecialchars($meeting['time']); ?></div>
+							<div class="inline"><?php echo htmlspecialchars($meeting['specialist']); ?></div>
+							<a class="btn brand z-depth-0 inline" href="deleteMeeting.php?id=<?php echo $meeting['id'] ?>">usuń zapytanie</a>
+						</form>
+
+			<?php } ?>
+
+		</div>
+	</div>
+	</section>
 
 
 </body>

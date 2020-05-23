@@ -17,16 +17,13 @@
 		<ol>
 			<li><a href="customerPage.php"> o mnie </a></li>
       <li><a href="newMeetingPage.php"> umów się </a></li>
-			<li><a href="site.php #home"> wyloguj </a></li> <!--Dodać powiadomienie wylogowano i wylogować-->
+			<li><a href="site.php #home"> wyloguj </a></li>
 		</ol>
 	</nav>
 
 	<section id="aboutCustomer">
 		<div class="container">
-			Imię<br>
-			Nazwisko<br>
-			E-mail<br>
-			Telefon
+				
 		</div>
   </section>
 
