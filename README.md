@@ -1,4 +1,4 @@
-# w-toku-php
+# php application based on website
 
 This aplication is working on XAMPP, beacuse it's using SQL databases. This is extension of basic html page ( w-toku-page ).
 Now beside nice layout, the page is providing nessesery options as registration, logging in, making an appointments.
